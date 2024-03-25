@@ -4,7 +4,7 @@
 using namespace std;
 
 int main() {
-    int mapSize = 9; //mapSize must be a perfect square
+    int mapSize = 49; //mapSize must be a perfect square
     Array2d map(mapSize);
     map.MakeRandomArray();
     map.PrintArray2d();

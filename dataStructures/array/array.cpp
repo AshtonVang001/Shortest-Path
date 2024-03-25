@@ -23,7 +23,7 @@ Array2d::Array2d(int s) {
 
 Array2d::~Array2d() {
     if (arr) {
-        for (int i = 0; i < sideLength; ++i) {
+        for (int i = 0; i < sideLength; i++) {
             if (arr[i]) {
                 delete[] arr[i];
             }
@@ -39,8 +39,7 @@ int Array2d::GetSideLength() {
 void Array2d::PrintArray2d() {
     for (int i = 0; i < sideLength; i++) {
         for (int j = 0; j < sideLength; j++) {
-            cout << arr[i][j] << " ";
-
+                cout << arr[i][j] << " ";
         }
         cout << endl;
     }

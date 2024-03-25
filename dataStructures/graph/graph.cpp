@@ -1,6 +1,7 @@
 #include "graph.h"
 #include <cmath>
 #include <iostream>
+#include <string>
 using namespace std;
 
 Graph::Graph(int v) : vertices(v), matrix(v * v) {}
@@ -21,72 +22,110 @@ void Graph::AddEdge(int row, int col, double typeX, double typeY) {
 //3) find each adjacent point to this point in map
 //4) find what #vertex this is in graph
 
-void Graph::MakeGraphFromMap(Array2d a) {
-    int vertNum = 0; //number of vertex we are on (order of vertex starting from 0)
-    for(int i = 0; i < a.GetSideLength(); i++) {
-        for (int j = 0; j < a.GetSideLength(); j++) { 
-            double currVertWeight = a.arr[i][j];
-            int up = vertNum - a.GetSideLength();
-            int down = vertNum + a.GetSideLength();
+void Graph::EdgeInserter(Array2d &a, string key, int vN, int u, int d, int l, int r, double cW, double uW, double dW, double lW, double rW) {
+    if(key == "middle") {
+        AddEdge(vN, r, cW, rW);
+        AddEdge(vN, l, cW, lW);
+        AddEdge(vN, d, cW, dW);
+        AddEdge(vN, u, cW, uW);
+        return;
+    }
+    if (key == "bottom") {
+        AddEdge(vN, u, cW, uW);
+        AddEdge(vN, l, cW, lW);
+        AddEdge(vN, r, cW, rW);
+        return;
+    }
+    if(key == "left") {
+        AddEdge(vN, u, cW, uW);
+        AddEdge(vN, r, cW, rW);
+        AddEdge(vN, d, cW, dW);
+        return;
+    }
+    if(key == "right") {
+        AddEdge(vN, l, cW, lW);
+        AddEdge(vN, d, cW, dW);
+        AddEdge(vN, u, cW, uW);
+        return;
+    }
+    if (key == "top") {
+        AddEdge(vN, l, cW, lW);
+        AddEdge(vN, r, cW, rW);
+        AddEdge(vN, d, cW, dW);
+        return;
+    }
+    if(key == "top-left-corner") {
+        AddEdge(vN, r, cW, rW);
+        AddEdge(vN, d, cW, dW);
+        return;
+    }
+    if(key == "top-right-corner") {
+        AddEdge(vN, l, cW, lW);
+        AddEdge(vN, d, cW, dW);
+        return;
+    }
+    
+    if (key == "bottom-left-corner") { 
+        AddEdge(vN, u, cW, uW);
+        AddEdge(vN, r, cW, rW);
+        return;
+    }
+    if(key == "bottom-right-corner") {
+        AddEdge(vN, u, cW, uW);
+        AddEdge(vN, l, cW, lW);
+        return;
+    }
+    
+}
+
+void Graph::MakeGraphFromMap(Array2d &a) {
+    int vertNum = 0; //number of vertex we are on (order of map starting from 0), this helps with inserting for matrix
+    int sideLength = a.GetSideLength();
+    for(int i = 0; i < sideLength; i++) {
+        for (int j = 0; j < sideLength; j++) { 
+            string key;
+            double currVertWeight = a.arr[i][j]; //number of current vertex we are trying to find edges for ex: in 3 x 3 map, first value is vertex is #0, last vertex is #8
+            int up = vertNum - sideLength; //all direction variables represent what # vertex would be in __ direction away from curr vertex
+            int down = vertNum + sideLength; //ie: what index we should be inserting edge into in matrix
             int right = vertNum + 1;
             int left = vertNum - 1;
-            int upWeight = 0;
-            int downWeight = 0;
-            int rightWeight = 0;
-            int leftWeight = 0;
-            //if statements to ensure no out of bounds errors
-            if(i != 0) upWeight = a.arr[i-1][j];
-            if(i != a.GetSideLength() -1 ) downWeight = a.arr[i+1][j];
-            if(j != a.GetSideLength() - 1) rightWeight = a.arr[i][j+1];
+
+            double upWeight = 0; //represent the weight of the vertex that would be in __ direction from curr vertex
+            double downWeight = 0;
+            double rightWeight = 0;
+            double leftWeight = 0;
+
+            if(i != 0) upWeight = a.arr[i-1][j]; //if statements to ensure no out of bounds errors ie: if we are at top, we can't get value of a[-1][0]
+            if(i != sideLength -1 ) downWeight = a.arr[i+1][j];
+            if(j != sideLength - 1) rightWeight = a.arr[i][j+1];
             if(j != 0) leftWeight = a.arr[i][j-1];
+
+             //inserting edges involves 9 different cases depending on where tile is located   
             if(i == 0) { //top piece
-                if(j == 0) { //top-left corner, then we want order # of vertex a[i][j+1] (2nd node by default) and vertex a[i+1][j], which is vertex right below, and its order is just sqrt(vertices) 
-                    AddEdge(vertNum, right, currVertWeight, rightWeight);
-                    AddEdge(vertNum, down, currVertWeight, downWeight);
-                }
-                else if(j == a.GetSideLength() - 1) { //top-right corner
-                    AddEdge(vertNum, left, currVertWeight, leftWeight);
-                    AddEdge(vertNum, down, currVertWeight, downWeight);
-                }
-                else { //top middle piece
-                    AddEdge(vertNum, left, currVertWeight, leftWeight);
-                    AddEdge(vertNum, right, currVertWeight, rightWeight);
-                    AddEdge(vertNum, down, currVertWeight, downWeight);
-                }
+                if(j == 0) //top-left corner, then we want order # of vertex a[i][j+1] (2nd node by default) and vertex a[i+1][j], which is vertex right below, and its order is just sqrt(vertices) 
+                    key = "top-left-corner";
+                else if(j == sideLength - 1)  //top-right corner
+                    key = "top-right-corner";
+                else //top middle piece
+                    key = "top";
             }
-            else if (i == a.GetSideLength() - 1) { //bottom piece
-                if(j == 0) { //bottom-left corner
-                    AddEdge(vertNum, up, currVertWeight, upWeight);
-                    AddEdge(vertNum, right, currVertWeight, rightWeight);
-                }
-                else if(j == a.GetSideLength() - 1) { //bottom-right corner
-                    AddEdge(vertNum, up, currVertWeight, upWeight);
-                    AddEdge(vertNum, left, currVertWeight, leftWeight);
-                }
-                else { //bottom middle piece
-                    AddEdge(vertNum, up, currVertWeight, upWeight);
-                    AddEdge(vertNum, left, currVertWeight, leftWeight);
-                    AddEdge(vertNum, right, currVertWeight, rightWeight);
-                }
+            else if (i == sideLength - 1) { //bottom piece
+                if(j == 0) //bottom-left corner
+                    key = "bottom-left-corner";
+                else if(j == sideLength - 1)  //bottom-right corner
+                    key = "bottom-right-corner";
+                else //bottom middle piece
+                    key = "bottom";
             }
-            else if(i != 0 && i != a.GetSideLength() - 1 && j == 0) { //left piece but not top or bottom row ALSO CHECK IF WE NEED THE i != 0
-                AddEdge(vertNum, up, currVertWeight, upWeight);
-                AddEdge(vertNum, right, currVertWeight, rightWeight);
-                AddEdge(vertNum, down, currVertWeight, downWeight);
-            }
-            else if(j == a.GetSideLength() - 1 && i != 0 && i != a.GetSideLength() - 1) { //right piece but not top or bottom row
-                AddEdge(vertNum, left, currVertWeight, leftWeight);
-                AddEdge(vertNum, down, currVertWeight, downWeight);
-                AddEdge(vertNum, up, currVertWeight, upWeight);
-            }
-            else { 
-                AddEdge(vertNum, right, currVertWeight, rightWeight);
-                AddEdge(vertNum, left, currVertWeight, leftWeight);
-                AddEdge(vertNum, down, currVertWeight, downWeight);
-                AddEdge(vertNum, up, currVertWeight, upWeight);
-            }
+            else if(i != 0 && i != sideLength - 1 && j == 0) //left piece but not top or bottom row
+                key = "left";
+            else if(j == sideLength - 1 && i != 0 && i != sideLength - 1) //right piece but not top or bottom row
+                key = "left";
+            else 
+               key = "middle";
+            EdgeInserter(a, key, vertNum, up, down, left, right, currVertWeight, upWeight, downWeight, leftWeight, rightWeight);
             vertNum++;
         }
     }
-}
+};
 
