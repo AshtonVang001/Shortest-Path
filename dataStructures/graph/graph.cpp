@@ -100,7 +100,7 @@ void Graph::MakeGraphFromMap(Array2d &a) {
             if(j != sideLength - 1) rightWeight = a.arr[i][j+1];
             if(j != 0) leftWeight = a.arr[i][j-1];
 
-             //inserting edges involves 9 different cases depending on where tile is located   
+            //inserting edges involves 9 different cases depending on where tile is located   
             if(i == 0) { //top piece
                 if(j == 0) //top-left corner, then we want order # of vertex a[i][j+1] (2nd node by default) and vertex a[i+1][j], which is vertex right below, and its order is just sqrt(vertices) 
                     key = "top-left-corner";
@@ -120,7 +120,7 @@ void Graph::MakeGraphFromMap(Array2d &a) {
             else if(i != 0 && i != sideLength - 1 && j == 0) //left piece but not top or bottom row
                 key = "left";
             else if(j == sideLength - 1 && i != 0 && i != sideLength - 1) //right piece but not top or bottom row
-                key = "left";
+                key = "right";
             else 
                key = "middle";
             EdgeInserter(a, key, vertNum, up, down, left, right, currVertWeight, upWeight, downWeight, leftWeight, rightWeight);
