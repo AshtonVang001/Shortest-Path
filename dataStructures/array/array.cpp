@@ -54,4 +54,11 @@ void Array2d::MakeRandomArray() {
     }
 }
 
-//test
+Array2d& Array2d::operator=(const Array2d& other) {
+    for (int i = 0; i < other.sideLength; i++) {
+        for (int j = 0; j < other.sideLength; j++)
+            this->arr[i][j] = other.arr[i][j];
+        
+    }
+    return *this;
+}

@@ -14,6 +14,7 @@ class Array2d {
         void PrintArray2d();
         void MakeRandomArray();
         int GetSideLength();
+        Array2d& operator=(const Array2d& other);
 };
 
 #endif

@@ -4,12 +4,10 @@
 #include "maps/mapRead.cpp"
 using namespace std;
 
-
-
 int main() {
     int mapSize = 25; //mapSize must be a perfect square
     Array2d map(mapSize);
-    map.MakeRandomArray();
+    map = makeMap("maps/map1.txt");
     map.PrintArray2d();
     Graph graph(mapSize);
     graph.MakeGraphFromMap(map);
