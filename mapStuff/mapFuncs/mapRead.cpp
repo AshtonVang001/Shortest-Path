@@ -1,4 +1,4 @@
-#include "../dataStructures/array/array.h"
+#include "../../dataStructures/array/array.h"
 #include <string>
 #include <fstream>
 #include <iostream>
@@ -21,15 +21,15 @@ Array2d makeMap(const string& filename) {
         file >> line; //scan in next line
         for (int j = 0; j < mapArray.GetSideLength()*2; j = j+2) { //loop over every 2nd tile as its 2x2
             char symbol = line[j];
-            int tile_value;
+            int tileValue;
             switch(symbol) {
-                case '*': tile_value = 3; break;  // forest
-                case '^': tile_value = 4; break;  // mountain
-                case '.': tile_value = 2; break;  // plain
-                case '-': tile_value = 1; break;  // road
-                default: tile_value = 0;  // unknown symbol, set to 0
+                case '*': tileValue = 3; break;  // forest
+                case '^': tileValue = 4; break;  // mountain
+                case '.': tileValue = 2; break;  // plain
+                case '-': tileValue = 1; break;  // road
+                default: tileValue = 0;  // unknown symbol, set to 0
             }
-            mapArray.arr[i][j/2] = tile_value;
+            mapArray.arr[i][j/2] = tileValue;
         }
         file >> line; //skip next line as they are 2x2 tiles
     }
