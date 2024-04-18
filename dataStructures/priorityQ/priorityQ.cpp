@@ -15,30 +15,30 @@ int PriorityQueue::getRightChild(int i) {
 }
 
 void PriorityQueue::heapUp(int i) {
-    while(i > 0 && a[getParent(i)] < a[i]){
+    while(i > 0 && a[getParent(i)] > a[i]){
         swap(a[getParent(i)], a[i]);
         i = getParent(i);
     }
 }
 
 void PriorityQueue::heapDown(int i) {
-    int maxVal = i;
+    int minVal = i;
 
     int l = getLeftChild(i);
 
-    if(l <= size && a[l] > a[maxVal]){
-        maxVal = l;
+    if(l <= size && a[l] < a[minVal]){
+        minVal = l;
     }
 
     int r = getRightChild(i);
 
-    if(r <= size && a[r] > a[maxVal]){
-        maxVal = r;
+    if(r <= size && a[r] < a[minVal]){
+        minVal = r;
     }
 
-    if(i != maxVal){
-        swap(a[i], a[maxVal]);
-        heapDown(maxVal);
+    if(i != minVal){
+        swap(a[i], a[minVal]);
+        heapDown(minVal);
     }
 }
 
@@ -48,14 +48,14 @@ void PriorityQueue::insert(int x) {
     size++;
 }
 
-int PriorityQueue::extractMax() {
-    int max = a[0];
+int PriorityQueue::extractMin() {
+    int min = a[0];
 
     a[0] = a[size];
     size--;
 
     heapDown(0);
-    return max;
+    return min;
 }
 
 
@@ -71,7 +71,7 @@ void PriorityQueue::changeP(int i, int x) {
     }
 }
 
-int PriorityQueue::getMax() {
+int PriorityQueue::getMin() {
     return a[0];
 }
 
@@ -96,4 +96,10 @@ void PriorityQueue::display() {
     cout << endl;
 }
 
-
+bool PriorityQueue::isEmpty(){
+    if(size == 0){
+        return true;
+    }else{
+        return false;
+    }
+}

@@ -30,10 +30,11 @@ public:
     void heapDown(int i);
     void heapUp(int i);
     void insert(int x);
-    int extractMax();
+    int extractMin();
     void changeP(int i, int x);
-    int getMax();
+    int getMin();
     void delete1(int x);
+    bool isEmpty();
     void display();
 
 

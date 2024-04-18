@@ -14,6 +14,7 @@ class Graph {
         Array2d matrix;
         Graph(int v);
         void MakeGraphFromMap(Array2d &a);
+        void sp(int sourceI, int sourceJ, int vertexI, int vertexJ, Array2d& map);
     
 };
 

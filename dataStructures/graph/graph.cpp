@@ -2,6 +2,7 @@
 #include <cmath>
 #include <iostream>
 #include <string>
+#include "../priorityQ/priorityQ.h"
 using namespace std;
 
 Graph::Graph(int v) : vertices(v), matrix(v * v) {}
@@ -128,4 +129,31 @@ void Graph::MakeGraphFromMap(Array2d &a) {
         }
     }
 };
+
+void Graph::sp(int sourceI, int sourceJ, int vertexI, int vertexJ, Array2d& map){
+    PriorityQueue vertice(vertices); //pq for vertices of map
+    PriorityQueue weight(vertices); //pq for weight between vertices
+    PriorityQueue queue(vertices);
+    pair<int, int> vW;
+    vW = make_pair(0, map.arr[sourceI][sourceJ]);
+    int* weight = new int[vertices];
+
+    queue.insert(vW.second);
+    weight[0] = vW.first;
+
+    for(int i = 0; i <= vertexI; i++){ //stores the vertices from the source to the vertex in pq
+        for(int j = 0; j <= vertexJ; j++){
+            vertice.insert(map.arr[i][j]);
+        }
+    }
+
+
+    for(int i = sourceI; i <= vertexJ; i++){ //stores the weight from the soure to a vertex in pq
+        for(int j = sourceJ; j <= vertexJ; j++){
+            if(map.arr[sourceI][sourceJ] != map.arr[i][j]){
+            weight.insert(WeightCalc(map.arr[sourceI][sourceJ], map.arr[i][j]));
+            }
+        }
+    }
+}
 
