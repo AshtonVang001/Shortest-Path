@@ -14,6 +14,7 @@ int main() {
     map1.PrintArray2d();
     printMap(map1);
     graph1.matrix.PrintArray2d();
+    graph1.DijkstraShortestPath(1);
   
     int map2Size = 36; //mapSize must be a perfect square
     Array2d map2(map2Size);

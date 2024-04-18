@@ -2,6 +2,7 @@
 #include <cmath>
 #include <iostream>
 #include <string>
+#include <limits>
 #include "../priorityQ/priorityQ.h"
 using namespace std;
 
@@ -128,70 +129,46 @@ void Graph::MakeGraphFromMap(Array2d &a) {
             vertNum++;
         }
     }
-};
-
-bool Graph::isAdj(int s, int v1, Array2d& map){ //takes index of source and vertex based off of a regular array
-        if(matrix.arr[s][v1] != 0){
-        return true;
-        }else{
-        return false;
-        }
 }
 
 
+void Graph::DijkstraShortestPath(int source) {
+    double* distance = new double[vertices]; // Array to store distances
+    bool* visited = new bool[vertices]; // Array to keep track of visited vertices
 
-void Graph::sp(int sourceI, int sourceJ, int vertexI, int vertexJ, Array2d& map){
-    PriorityQueue vertice(vertices); //pq for vertices of map
-    PriorityQueue weight(vertices); //pq for weight between vertices
-
-
-    int* arr = new int[vertices];
-    int sideLength = map.GetSideLength();
-    for(int i = 0; i < sideLength; i++){     //puts the 2d graph into a regular array
-        for(int j = 0; j < sideLength; j++){
-            arr[i] = map.arr[i][j];
-        }
+    // Initialize distances to infinity and visited to false
+    for (int i = 0; i < vertices; ++i) {
+        distance[i] = numeric_limits<double>::max();
+        visited[i] = false;
     }
 
+    distance[source] = 0; // Distance from source to source is 0
 
+    PriorityQueue pq(vertices); // Initialize priority queue
 
-    for(int i = 0; i <= vertexI; i++){ //stores the vertices from the source to the vertex in pq
-        for(int j = 0; j <= vertexJ; j++){
-            vertice.insert(map.arr[i][j]);
-        }
-    } 
+    pq.insert(make_pair(0, source)); // Insert source vertex with distance 0
 
-    weight.insert(0);
+    while (!pq.isEmpty()) {
+        pair<int, int> minPair = pq.extractMin(); // Extract pair with minimum distance
+        int u = minPair.second; // Extract vertex from the pair
+        visited[u] = true; // Mark vertex as visited
 
-    while(weight.isEmpty() == false){
-        weight.extractMin();
-        
-    }
-
-    
-    for(int i = sourceI; i <= vertexJ; i++){ //stores the weight from the soure to a vertex in pq (trial)
-        for(int j = sourceJ; j <= vertexJ; j++){
-            if(map.arr[sourceI][sourceJ] != map.arr[i][j]){
-            weight.insert(WeightCalc(map.arr[sourceI][sourceJ], map.arr[i][j]));
+        // Update distances of all adjacent vertices
+        for (int v = 0; v < vertices; ++v) {
+            if (matrix.arr[u][v] != 0 && !visited[v] && distance[u] + matrix.arr[u][v] < distance[v]) {
+                distance[v] = distance[u] + matrix.arr[u][v]; // Update distance
+                pq.insert(make_pair(distance[v], v)); // Insert/update vertex in priority queue
             }
         }
     }
-}
 
-
-void Graph::sp2(int sourceI, int sourceJ, int vertexI, int vertexJ, Array2d& map){
-    PriorityQueue v(vertices); //pq for vertecies
-    PriorityQueue weight(vertices); //pq for weight
-    pair<int, int> vW; //pair for weight and vertices
-    vW = make_pair(0, map.arr[sourceI][sourceJ]); //makes the first pair
-    int* w = new int[vertices]; //arr to store weight
-
-    v.insert(vW.second); //inserts source into pq
-    weight.insert(vW.first); //inserts weight of the source into pq
-    w[sourceI] = vW.first; //inserts weight into the arr
-
-    while(v.isEmpty() == false){
-        
+    // Print shortest distances from source
+    cout << "Shortest distances from source vertex " << source << ":\n";
+    for (int i = 0; i < vertices; ++i) {
+        cout << "Vertex " << i << ": " << distance[i] << endl;
     }
-}
 
+    // Clean up dynamic memory
+    delete[] distance;
+    delete[] visited;
+}
