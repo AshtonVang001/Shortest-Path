@@ -130,30 +130,68 @@ void Graph::MakeGraphFromMap(Array2d &a) {
     }
 };
 
+bool Graph::isAdj(int s, int v1, Array2d& map){ //takes index of source and vertex based off of a regular array
+        if(matrix.arr[s][v1] != 0){
+        return true;
+        }else{
+        return false;
+        }
+}
+
+
+
 void Graph::sp(int sourceI, int sourceJ, int vertexI, int vertexJ, Array2d& map){
     PriorityQueue vertice(vertices); //pq for vertices of map
     PriorityQueue weight(vertices); //pq for weight between vertices
-    PriorityQueue queue(vertices);
-    pair<int, int> vW;
-    vW = make_pair(0, map.arr[sourceI][sourceJ]);
-    int* weight = new int[vertices];
 
-    queue.insert(vW.second);
-    weight[0] = vW.first;
+
+    int* arr = new int[vertices];
+    int sideLength = map.GetSideLength();
+    for(int i = 0; i < sideLength; i++){     //puts the 2d graph into a regular array
+        for(int j = 0; j < sideLength; j++){
+            arr[i] = map.arr[i][j];
+        }
+    }
+
+
 
     for(int i = 0; i <= vertexI; i++){ //stores the vertices from the source to the vertex in pq
         for(int j = 0; j <= vertexJ; j++){
             vertice.insert(map.arr[i][j]);
         }
+    } 
+
+    weight.insert(0);
+
+    while(weight.isEmpty() == false){
+        weight.extractMin();
+        
     }
 
-
-    for(int i = sourceI; i <= vertexJ; i++){ //stores the weight from the soure to a vertex in pq
+    
+    for(int i = sourceI; i <= vertexJ; i++){ //stores the weight from the soure to a vertex in pq (trial)
         for(int j = sourceJ; j <= vertexJ; j++){
             if(map.arr[sourceI][sourceJ] != map.arr[i][j]){
             weight.insert(WeightCalc(map.arr[sourceI][sourceJ], map.arr[i][j]));
             }
         }
+    }
+}
+
+
+void Graph::sp2(int sourceI, int sourceJ, int vertexI, int vertexJ, Array2d& map){
+    PriorityQueue v(vertices); //pq for vertecies
+    PriorityQueue weight(vertices); //pq for weight
+    pair<int, int> vW; //pair for weight and vertices
+    vW = make_pair(0, map.arr[sourceI][sourceJ]); //makes the first pair
+    int* w = new int[vertices]; //arr to store weight
+
+    v.insert(vW.second); //inserts source into pq
+    weight.insert(vW.first); //inserts weight of the source into pq
+    w[sourceI] = vW.first; //inserts weight into the arr
+
+    while(v.isEmpty() == false){
+        
     }
 }
 
