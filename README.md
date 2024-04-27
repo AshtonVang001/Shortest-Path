@@ -16,7 +16,7 @@ File List:
         mapStuff: folder //contain everything related to maps that isn't part of a class
             mapFuncs: folder
                 mapRead.cpp //function to read in text file and make corresponding 2d matrx
-                printMap.cpp //function to print the map from the 2d array with colors
+                printMap.cpp //function to print the map from the 2d array with colors and also to print shortest path
             maps: folder //holds text files of maps
                 map1.txt
                 map2.txt

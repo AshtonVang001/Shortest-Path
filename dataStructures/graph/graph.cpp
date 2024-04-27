@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <limits>
+#include <utility>
 #include "../priorityQ/priorityQ.h"
 using namespace std;
 
@@ -132,14 +133,16 @@ void Graph::MakeGraphFromMap(Array2d &a) {
 }
 
 
-void Graph::DijkstraShortestPath(int source) {
+pair<int*, int> Graph::DijkstraShortestPath(int source, int dest) { //returns pair, first is array of all nodes on path, second is size of array
     double* distance = new double[vertices]; // Array to store distances
     bool* visited = new bool[vertices]; // Array to keep track of visited vertices
+    int* predecessor = new int[vertices];
 
     // Initialize distances to infinity and visited to false
     for (int i = 0; i < vertices; ++i) {
         distance[i] = numeric_limits<double>::max();
         visited[i] = false;
+        predecessor[i] = -1;
     }
 
     distance[source] = 0; // Distance from source to source is 0
@@ -148,6 +151,7 @@ void Graph::DijkstraShortestPath(int source) {
 
     pq.insert(make_pair(0, source)); // Insert source vertex with distance 0
 
+    int pSize = 0;
     while (!pq.isEmpty()) {
         pair<int, int> minPair = pq.extractMin(); // Extract pair with minimum distance
         int u = minPair.second; // Extract vertex from the pair
@@ -157,18 +161,30 @@ void Graph::DijkstraShortestPath(int source) {
         for (int v = 0; v < vertices; ++v) {
             if (matrix.arr[u][v] != 0 && !visited[v] && distance[u] + matrix.arr[u][v] < distance[v]) {
                 distance[v] = distance[u] + matrix.arr[u][v]; // Update distance
+                predecessor[v] = u;
+                pSize++;
                 pq.insert(make_pair(distance[v], v)); // Insert/update vertex in priority queue
             }
         }
     }
 
     // Print shortest distances from source
-    cout << "Shortest distances from source vertex " << source << ":\n";
-    for (int i = 0; i < vertices; ++i) {
-        cout << "Vertex " << i << ": " << distance[i] << endl;
-    }
+    cout << "Shortest distance from vertex " << source << " to " << dest << ": " << distance[dest] << endl;
 
+    cout << "Shortest path: ";
+    int current = dest;
+    int* path = new int[vertices];
+    int pathSize = 0;
+    while (current != -1) {
+        cout << current;
+        path[pathSize++] = current;
+        current = predecessor[current];
+        if (current != -1) cout << " -> ";
+    }
+    cout << endl;
+    
     // Clean up dynamic memory
     delete[] distance;
     delete[] visited;
+    return make_pair(path, pathSize);
 }
