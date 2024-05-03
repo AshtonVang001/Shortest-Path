@@ -16,10 +16,10 @@ Array2d makeMap(const string& filename) {
     file >> totalTiles;  // Read the first line to get the total number of tiles
     Array2d mapArray(totalTiles);
 
-    for (int i = 0; i < mapArray.GetSideLength(); i++) { // Read the rest of the lines and map symbols to numbers
+    for (int i = 0; i < mapArray.GetSideLengthRow(); i++) { // Read the rest of the lines and map symbols to numbers
         string line;
         file >> line; //scan in next line
-        for (int j = 0; j < mapArray.GetSideLength()*2; j = j+2) { //loop over every 2nd tile as its 2x2
+        for (int j = 0; j < mapArray.GetSideLengthRow()*2; j = j+2) { //loop over every 2nd tile as its 2x2
             char symbol = line[j];
             int tileValue;
             switch(symbol) {

@@ -25,6 +25,7 @@ void Graph::AddEdge(int row, int col, double typeX, double typeY) {
 //3) find each adjacent point to this point in map
 //4) find what #vertex this is in graph
 
+//function to help with insertion depending on type of tile
 void Graph::EdgeInserter(Array2d &a, string key, int vN, int u, int d, int l, int r, double cW, double uW, double dW, double lW, double rW) {
     if(key == "middle") {
         AddEdge(vN, r, cW, rW);
@@ -83,7 +84,7 @@ void Graph::EdgeInserter(Array2d &a, string key, int vN, int u, int d, int l, in
 
 void Graph::MakeGraphFromMap(Array2d &a) {
     int vertNum = 0; //number of vertex we are on (order of map starting from 0), this helps with inserting for matrix
-    int sideLength = a.GetSideLength();
+    int sideLength = a.GetSideLengthRow();
     for(int i = 0; i < sideLength; i++) {
         for (int j = 0; j < sideLength; j++) { 
             string key;

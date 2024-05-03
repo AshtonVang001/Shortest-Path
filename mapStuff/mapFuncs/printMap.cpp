@@ -5,7 +5,7 @@
 using namespace std;
 
 void printMap(Array2d& map) {
-    int sideLength = map.GetSideLength();
+    int sideLength = map.GetSideLengthRow();
     for (int i = 0; i < sideLength; i++) {
         string line;
         for (int j = 0; j < sideLength; j++) {
@@ -32,7 +32,7 @@ bool nodeOnPath(int i, int j, int sideLength, pair<int*, int> path) {
 }
 
 void printShortestPath(Array2d& map, pair<int*, int> path) {
-    int sideLength = map.GetSideLength();
+    int sideLength = map.GetSideLengthRow();
     for (int i = 0; i < sideLength; i++) { //iterate through every verticie
         string line;
         for (int j = 0; j < sideLength; j++) {
