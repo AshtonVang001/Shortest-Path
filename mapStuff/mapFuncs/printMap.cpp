@@ -23,6 +23,10 @@ void printMap(Array2d& map) {
     }
 }
 
+int coordCalc(int x, int y, int sideLength) {
+    return x + (y * sideLength);
+}
+
 bool nodeOnPath(int i, int j, int sideLength, pair<int*, int> path) {
     for (int l = 0; l < path.second; l++) {
         if (path.first[l] == i * sideLength + j) //node number is equal to i * sideLength + j

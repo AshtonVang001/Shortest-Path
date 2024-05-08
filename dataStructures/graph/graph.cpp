@@ -19,13 +19,16 @@ void Graph::AddEdge(int row, int col, double typeX, double typeY) {
     matrix.arr[row][col] = weight;
 }
 
+void Graph::newAddEdge(int row, int col, int weight){
+    matrix.arr[row][col] = weight;
+}
+
 //to make graph from 2d Map:
 //1) go to each individual point in map
 //2 check what type of vertex it is (corner, top, left, middle, etc)
 //3) find each adjacent point to this point in map
 //4) find what #vertex this is in graph
 
-//function to help with insertion depending on type of tile
 void Graph::EdgeInserter(Array2d &a, string key, int vN, int u, int d, int l, int r, double cW, double uW, double dW, double lW, double rW) {
     if(key == "middle") {
         AddEdge(vN, r, cW, rW);
@@ -170,19 +173,18 @@ pair<int*, int> Graph::DijkstraShortestPath(int source, int dest) { //returns pa
     }
 
     // Print shortest distances from source
-    cout << "Shortest distance from vertex " << source << " to " << dest << ": " << distance[dest] << endl;
-
-    cout << "Shortest path: ";
+    //cout << "Shortest distance from vertex " << source << " to " << dest << ": " << distance[dest] << endl;
+    //cout << "Shortest path: ";
     int current = dest;
     int* path = new int[vertices];
     int pathSize = 0;
     while (current != -1) {
-        cout << current;
+        //cout << current;
         path[pathSize++] = current;
         current = predecessor[current];
-        if (current != -1) cout << " -> ";
+        //if (current != -1) cout << " -> ";
     }
-    cout << endl;
+    //cout << endl;
     
     // Clean up dynamic memory
     delete[] distance;

@@ -14,8 +14,9 @@ class Graph {
         void MakeGraphFromMap(Array2d &a);
         double WeightCalc(double x, double y);
          void AddEdge(int row, int col, double typeX, double typeY);
-        pair<int*, int> DijkstraShortestPath(int source, int dest);    
+         void newAddEdge(int row, int col, int weight);
+        pair<int*, int> DijkstraShortestPath(int source, int dest);
+    
 };
-
 
 #endif

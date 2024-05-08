@@ -15,8 +15,11 @@ int main() {
 
     switch (part){
     case 1:{
-        int source, dest;
-    
+        int sourceX, sourceY, destX, destY;
+        string cont; 
+        cout << "The map contains 2 x 2 tiles of different types In ascending order of weight, we have '-' as road. '.' is plain '*' is forest. '^' is mountain." << endl;
+        cout << "Coordinates are like quadrant 4 of a graph, except without a negative sign for Y values. Ex: top right value is (4, 0), bottom right is (4, 4)" << endl;
+
         cout << "Map 1" << endl;
         int map1Size = 25; //mapSize must be a perfect square
         Array2d map1(map1Size);
@@ -26,12 +29,17 @@ int main() {
         //map1.PrintArray2d();
         printMap(map1);
         //graph1.matrix.PrintArray2d();
-        std::cout << "Enter destination vertex # (0-" << map1Size - 1 << ")" << endl;  
-        cin >> source;
-        std::cout << "Enter source vertex # (0-" << map1Size - 1 << ")" << endl;  
-        cin >> dest;
-        pair<int*, int> path1 = graph1.DijkstraShortestPath(source, dest);
+        std::cout << "Enter source vertex coordinates (x value, then y value) (0-" << map1.GetSideLengthRow() - 1 << ")" << endl;  
+        cin >> sourceX;
+        cin >> sourceY;
+        std::cout << "Enter destination vertex coordinates (0-" << map1.GetSideLengthRow() - 1 << ")" << endl;  
+        cin >> destX;
+        cin >> destY;
+        pair<int*, int> path1 = graph1.DijkstraShortestPath(coordCalc(sourceX, sourceY, map1.GetSideLengthCol()), coordCalc(destX, destY, map1.GetSideLengthCol()));
         printShortestPath(map1, path1);
+
+        cout << "Enter anything to continue" << endl;
+        cin >> cont;
 
         cout << "Map 2" << endl;
         int map2Size = 36; //mapSize must be a perfect square
@@ -42,13 +50,18 @@ int main() {
         //map2.PrintArray2d();
         printMap(map2);
         //graph2.matrix.PrintArray2d();
-        std::cout << "Enter destination vertex # (0-" << map2Size - 1 << ")" << endl;  
-        cin >> source;
-        std::cout << "Enter source vertex # (0-" << map2Size - 1 << ")" << endl;  
-        cin >> dest;
-        pair<int*, int> path2 = graph2.DijkstraShortestPath(source, dest);
+        std::cout << "Enter source vertex coordinates (x value, then y value) (0-" << map2.GetSideLengthRow() - 1 << ")" << endl;  
+        cin >> sourceX;
+        cin >> sourceY;
+        std::cout << "Enter destination vertex coordinates (0-" << map2.GetSideLengthRow() - 1 << ")" << endl;  
+        cin >> destX;
+        cin >> destY;
+        pair<int*, int> path2 = graph2.DijkstraShortestPath(coordCalc(sourceX, sourceY, map2.GetSideLengthCol()), coordCalc(destX, destY, map2.GetSideLengthCol()));
         printShortestPath(map2, path2);
     
+        cout << "Enter anything to continue" << endl;
+        cin >> cont;
+
         cout << "Map 3" << endl;
         int map3Size = 49; //mapSize must be a perfect square
         Array2d map3(map3Size);
@@ -58,12 +71,17 @@ int main() {
         //map3.PrintArray2d();
         printMap(map3);
         //graph3.matrix.PrintArray2d();
-        std::cout << "Enter destination vertex # (0-" << map3Size - 1 << ")" << endl;  
-        cin >> source;
-        std::cout << "Enter source vertex # (0-" << map3Size - 1 << ")" << endl;  
-        cin >> dest;
-        pair<int*, int> path3 = graph3.DijkstraShortestPath(source, dest);
+        std::cout << "Enter source vertex coordinates (x value, then y value) (0-" << map3.GetSideLengthRow() - 1 << ")" << endl;  
+        cin >> sourceX;
+        cin >> sourceY;
+        std::cout << "Enter destination vertex coordinates (0-" << map3.GetSideLengthRow() - 1 << ")" << endl;  
+        cin >> destX;
+        cin >> destY;
+        pair<int*, int> path3 = graph3.DijkstraShortestPath(coordCalc(sourceX, sourceY, map3.GetSideLengthCol()), coordCalc(destX, destY, map3.GetSideLengthCol()));
         printShortestPath(map3, path3);
+
+        cout << "Enter anything to continue" << endl;
+        cin >> cont;
     
         cout << "Map 4" << endl;
         int map4Size = 64; //mapSize must be a perfect square
@@ -74,12 +92,17 @@ int main() {
         //map4.PrintArray2d();
         printMap(map4);
         //graph4.matrix.PrintArray2d();
-        std::cout << "Enter destination vertex # (0-" << map4Size - 1 << ")" << endl;  
-        cin >> source;
-        std::cout << "Enter source vertex # (0-" << map4Size - 1 << ")" << endl;  
-        cin >> dest;
-        pair<int*, int> path4 = graph4.DijkstraShortestPath(source, dest);
+        std::cout << "Enter source vertex coordinates (x value, then y value) (0-" << map4.GetSideLengthRow() - 1 << ")" << endl;  
+        cin >> sourceX;
+        cin >> sourceY;
+        std::cout << "Enter destination vertex coordinates (0-" << map4.GetSideLengthRow() - 1 << ")" << endl;  
+        cin >> destX;
+        cin >> destY;
+        pair<int*, int> path4 = graph4.DijkstraShortestPath(coordCalc(sourceX, sourceY, map4.GetSideLengthCol()), coordCalc(destX, destY, map4.GetSideLengthCol()));
         printShortestPath(map4, path4);
+
+        cout << "Enter anything to continue" << endl;
+        cin >> cont;
 
         cout << "Map 5" << endl;
         int map5Size = 81; //mapSize must be a perfect square
@@ -90,29 +113,28 @@ int main() {
         //map5.PrintArray2d();
         printMap(map5);
         //graph5.matrix.PrintArray2d();
-        std::cout << "Enter destination vertex # (0-" << map5Size - 1 << ")" << endl;  
-        cin >> source;
-        std::cout << "Enter source vertex # (0-" << map5Size - 1 << ")" << endl;  
-        cin >> dest;
-        pair<int*, int> path5 = graph5.DijkstraShortestPath(source, dest);
+        std::cout << "Enter source vertex coordinates (x value, then y value) (0-" << map5.GetSideLengthRow() - 1 << ")" << endl;  
+        cin >> sourceX;
+        cin >> sourceY;
+        std::cout << "Enter destination vertex coordinates (0-" << map5.GetSideLengthRow() - 1 << ")" << endl;  
+        cin >> destX;
+        cin >> destY;
+        pair<int*, int> path5 = graph5.DijkstraShortestPath(coordCalc(sourceX, sourceY, map5.GetSideLengthCol()), coordCalc(destX, destY, map5.GetSideLengthCol()));
         printShortestPath(map5, path5);
 
         break;
     }
         
     case 2:{
-        //test functions
-        cout << "Enter test size" << endl;
-        int testSize1;
-        cin >> testSize1;
+//test functions
+        cout << "Enter number of vertices" << endl;
+        int numVert;
+        cin >> numVert;
         int** arr;
-        Array2d test1(testSize1);
-        Graph testG1(testSize1);
-        test1.MakeRandomArray();
-        test1.PrintArray2d();
+        Graph testG1(numVert);
 
         int vertNum = 0; // number of vertex we are on (order of map starting from 0), this helps with inserting for matrix
-        int totalVertices = test1.GetSideLengthRow() * test1.GetSideLengthCol();
+        int totalVertices = numVert*numVert;
 
         cout << "Enter percent of connectivity (as a decimal)" << endl;
         double percent;
@@ -120,55 +142,40 @@ int main() {
 
         int verticesToConnect = totalVertices * percent;
 
-        // Seed the random number generator
-        srand(time(nullptr));
-
         int howMany = 0; //keeps track of how many vertices to connect
-        for(int i = 0; i < test1.GetSideLengthRow(); i++) {
-            for (int j = 0; j < test1.GetSideLengthCol(); j++) {
-                double currVertWeight = test1.arr[i][j];
-
-                int up = (i > 0) ? (vertNum - test1.GetSideLengthCol()) : -1;
-                int down = (i < test1.GetSideLengthRow() - 1) ? (vertNum + test1.GetSideLengthCol()) : -1;
-                int right = (j < test1.GetSideLengthCol() - 1) ? (vertNum + 1) : -1;
-                int left = (j > 0) ? (vertNum - 1) : -1;
-
-                double upWeight = (up != -1) ? test1.arr[i-1][j] : 0;
-                double downWeight = (down != -1) ? test1.arr[i+1][j] : 0;
-                double rightWeight = (right != -1) ? test1.arr[i][j+1] : 0;
-                double leftWeight = (left != -1) ? test1.arr[i][j-1] : 0;
-
-                // decide whether to connect this vertex
-                if(verticesToConnect == testSize1){ //if it is 100%
-                    if (up != -1) testG1.matrix.arr[vertNum][up] = testG1.WeightCalc(currVertWeight, test1.arr[i-1][j]);
-                    if (down != -1) testG1.matrix.arr[vertNum][down] = testG1.WeightCalc(currVertWeight, test1.arr[i+1][j]);
-                    if (right != -1) testG1.matrix.arr[vertNum][right] = testG1.WeightCalc(currVertWeight, test1.arr[i][j+1]);
-                    if (left != -1) testG1.matrix.arr[vertNum][left] = testG1.WeightCalc(currVertWeight, test1.arr[i][j-1]);
-                }
-                else if (howMany < verticesToConnect) { //if it is not 100%
-                    if (up != -1) testG1.matrix.arr[vertNum][up] = testG1.WeightCalc(currVertWeight, test1.arr[i-1][j]);
-                    if (down != -1) testG1.matrix.arr[vertNum][down] = testG1.WeightCalc(currVertWeight, test1.arr[i+1][j]);
-                    if (right != -1) testG1.matrix.arr[vertNum][right] = testG1.WeightCalc(currVertWeight, test1.arr[i][j+1]);
-                    if (left != -1) testG1.matrix.arr[vertNum][left] = testG1.WeightCalc(currVertWeight, test1.arr[i][j-1]);
+        for(int i = 0; i < numVert; i++) {
+            for (int j = 0; j < numVert; j++) {
+                if(percent == 1){ //if it is 100%
+                testG1.newAddEdge(i, j, rand()%100);
+                }else if(howMany < verticesToConnect){
+                    testG1.newAddEdge(rand()%numVert, rand()%numVert, rand()%100);
                 }
                 howMany++;
-                vertNum++;
             }
         }
 
 
+        cout << "Matrix: " << endl;
         testG1.matrix.PrintArray2d();
 
-        clock_t start, end;
+        //calculates the average time of 100 iterations
+        double avgTime;
+        double time = 0;;
+        for(int i = 0; i < 100; i++){ //probem with the loop 
+            clock_t start, end;
+            start = clock();
+            int destination = (int)(numVert * percent); // Ensure integer vertex index
+            if(destination >= numVert) // Check if valid index
+                destination = numVert - 1; // Adjust if out of bounds
 
-        start = clock();
+            testG1.DijkstraShortestPath(0, destination);
+            end = clock();
+            double time_taken = double(end - start) / double(CLOCKS_PER_SEC);
+            time += time_taken;
+        }
 
-        testG1.DijkstraShortestPath(0, testSize1 * percent);
-
-        end = clock();
-
-        double time_taken = double(end - start) / double(CLOCKS_PER_SEC);
-        cout << "Time taken by program is : " << time_taken;
+        avgTime = time/100;
+        cout << "The average time taken by program is : " << avgTime;
         cout << " sec " << endl;
         break;
     }
